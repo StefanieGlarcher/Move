@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         tvw=(TextView)findViewById(R.id.textView1);
         picker=(TimePicker)findViewById(R.id.timePicker1);
         picker.setIs24HourView(true);
-        btnGet=(Button)findViewById(R.id.button1);
+        btnGet=(Button)findViewById(R.id.btnStart);
         btnGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     am_pm="AM";
                 }
-                tvw.setText("Selected Date: "+ hour +":"+ minute+" "+am_pm);
+                tvw.setText(hour +":"+ minute+" "+am_pm);
             }
         });
     }
