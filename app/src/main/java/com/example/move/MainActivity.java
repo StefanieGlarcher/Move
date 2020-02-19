@@ -10,7 +10,8 @@ import android.widget.TimePicker;
 
 public class MainActivity extends AppCompatActivity {
     TimePicker picker;
-    Button btnGet;
+    Button btnStart;
+    Button btnAbbrechen;
     TextView tvw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         tvw=(TextView)findViewById(R.id.textView1);
         picker=(TimePicker)findViewById(R.id.timePicker1);
         picker.setIs24HourView(true);
-        btnGet=(Button)findViewById(R.id.btnStart);
-        btnGet.setOnClickListener(new View.OnClickListener() {
+        btnStart=(Button)findViewById(R.id.btnStart);
+        btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int hour, minute;
@@ -42,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
                     am_pm="AM";
                 }
                 tvw.setText(hour +":"+ minute+" "+am_pm);
+            }
+        });
+
+        btnAbbrechen=(Button)findViewById(R.id.btnAbbrechen);
+        btnAbbrechen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                picker.setHour(0);
+                picker.setMinute(0);
             }
         });
     }
