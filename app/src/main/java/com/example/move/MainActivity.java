@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnStart;
     Button btnAbbrechen;
     TextView tvw;
+    int hour, minute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int hour, minute;
+
                 String am_pm;
                 if (Build.VERSION.SDK_INT >= 23 ){
                     hour = picker.getHour();
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 picker.setHour(0);
                 picker.setMinute(0);
+
+                hour = 0;
+                minute = 0;
             }
         });
     }
