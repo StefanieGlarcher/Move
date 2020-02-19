@@ -1,6 +1,8 @@
 package com.example.move;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.os.Build;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 Timer timer = new Timer();
                 String minuteText = timer.setTimer(hour, minute);
                 setContentView(R.layout.activity_second);
+
+
+
             }
         });
 
@@ -59,5 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 minute = 0;
             }
         });
+    }
+
+    public void goToActivity(View view){
+        Intent intent = new Intent (this, MainActivity2.class);
+        startActivity(intent);
     }
 }

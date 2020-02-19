@@ -19,8 +19,6 @@ public class Timer {
         String minute= Integer.toString(hourinM);
 
         return minute;
-
-
     }
 
     public void pauseTimer(){
@@ -32,6 +30,10 @@ public class Timer {
     public void startTimer(){
         countDown = new CountDownTimer(timeleft, 1000);
 
+
+    }
+
+    public void checkTimer(){
 
     }
 }
