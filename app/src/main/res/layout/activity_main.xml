@@ -17,12 +17,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="34dp" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
@@ -35,6 +29,7 @@
             android:id="@+id/btnAbbrechen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/timePicker1"
             android:layout_gravity="bottom"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
