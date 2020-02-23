@@ -19,18 +19,14 @@ public class Timer {
         String minute= Integer.toString(hourinM);
 
         return minute;
-
-
     }
 
     public void pauseTimer(){
-        countDown.cancel();
-        timerRunning = false;
-        startPauseButton.setText("Weiter");
+      //
     }
 
     public void startTimer(){
-        countDown = new CountDownTimer(timeleft, 1000);
+        //
 
 
     }
