@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Timer timer = new Timer();
                 String minuteText = timer.setTimer(hour, minute);
-                setContentView(R.layout.activity_second);
+              //  setContentView(R.layout.activity_second);
             }
         });
 
