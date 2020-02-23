@@ -1,7 +1,6 @@
 package com.example.move;
 
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -10,6 +9,10 @@ public class Timer {
     TimePicker picker;
     Button btnGet;
     TextView tvw;
+    CountDownTimer countDownTimer;
+    long timeleft;
+    boolean timerRunning;
+    Button btnPause;
 
     public String setTimer(int h, int m){
 
@@ -22,11 +25,13 @@ public class Timer {
     }
 
     public void pauseTimer(){
-      //
+      //  countDownTimer.cancel();
+      //  timerRunning = false;
+      //  startPauseButton.setText("Weiter");
     }
 
     public void startTimer(){
-        //
+      //  countDownTimer = new CountDownTimer(timeleft, 1000);
 
 
     }
