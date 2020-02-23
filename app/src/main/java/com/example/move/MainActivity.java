@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnStart;
     Button btnAbbrechen;
     int hour, minute;
+    String minuteText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Timer timer = new Timer();
-                String minuteText = timer.setTimer(hour, minute);
+                minuteText = timer.setTimer(hour, minute);
 
                 openActivity2();
             }
@@ -66,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity2(){
         Intent intent = new Intent(this, Main2Activity.class);
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString("minute", minuteText);
+
+        intent.putExtras(bundle);
+
         startActivity(intent);
     }
 }
