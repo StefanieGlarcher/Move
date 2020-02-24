@@ -1,5 +1,6 @@
 package com.example.move;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAbbrechen;
     int hour, minute;
     String minuteText;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
