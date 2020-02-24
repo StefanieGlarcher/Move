@@ -49,6 +49,7 @@ public class Main2Activity extends AppCompatActivity {
                 startStop();
             }
         });
+        startStop();
         updateTimer();
     }
 
