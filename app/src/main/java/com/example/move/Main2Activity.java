@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -13,7 +17,12 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity implements SensorEventListener {
+
+    SensorManager sensorManager;
+    boolean running = false;
+
+
     TextView countdownText;
     Button btnAbbrechen;
     Button btnPause;
@@ -24,6 +33,8 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         setContentView(R.layout.activity_main2);
         countdownText=(TextView) findViewById(R.id.textView);
@@ -70,6 +81,10 @@ public class Main2Activity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 timeLeftInMilliseconds = millisUntilFinished;
                 updateTimer();
+                if (timerRunning = true) {
+
+
+                }
             }
 
             @Override
@@ -101,5 +116,25 @@ public class Main2Activity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
+    }
+
+    public void onSensorChange(SensorEvent event){
+        // Check if sensor ist on
+
+        // If sensor not on then vibrate
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (running = false){
+            // Vibrieren starten (Methode welche dauerhaft Vibriert)
+        } else {
+            // Vibration stoppen (Methode welche vibration stoppt)
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
