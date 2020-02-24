@@ -121,6 +121,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     public void onSensorChange(SensorEvent event){
         // Check if sensor ist on
 
+        // https://www.youtube.com/watch?v=CNGMWnmldaU
+
         // If sensor not on then vibrate
     }
 
