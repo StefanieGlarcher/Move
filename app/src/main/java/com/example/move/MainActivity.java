@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         picker=(TimePicker)findViewById(R.id.timePicker1);
         picker.setIs24HourView(true);
+        picker.setHour(0);
+        picker.setMinute(0);
         btnStart=(Button)findViewById(R.id.btnStart);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override

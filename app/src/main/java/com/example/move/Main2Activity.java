@@ -2,12 +2,16 @@ package com.example.move;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 public class Main2Activity extends AppCompatActivity {
     TextView countdownText;
@@ -59,14 +63,15 @@ public class Main2Activity extends AppCompatActivity {
     public void startTimer(){
         countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
             @Override
-            public void onTick(long l) {
-                timeLeftInMilliseconds = 1;
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMilliseconds = millisUntilFinished;
                 updateTimer();
             }
 
             @Override
             public void onFinish() {
-                countdownText.setText("00:00");
+                timerRunning = false;
+                btnPause.setText("Start");
             }
         }.start();
 
@@ -81,15 +86,16 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public void updateTimer() {
-        int minutes = (int) timeLeftInMilliseconds / 60000;
-        int seconds = (int) timeLeftInMilliseconds % 60000 / 1000;
+        int minutes = (int) (timeLeftInMilliseconds / 1000) / 60;
+        int seconds = (int) (timeLeftInMilliseconds / 1000) % 60;
 
-        String timeLeftText;
+        String timeLeftText =  String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
-        timeLeftText = "" + minutes;
-        timeLeftText += ":";
-        if (seconds < 10) timeLeftText += "0";
-        timeLeftText += seconds;
+
+      //  timeLeftText = "" + minutes;
+      //  timeLeftText += ":";
+      //  if (seconds < 10) timeLeftText += "0";
+      //  timeLeftText += seconds;
 
         countdownText.setText(timeLeftText);
     }
