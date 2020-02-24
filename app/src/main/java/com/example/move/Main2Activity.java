@@ -13,18 +13,19 @@ public class Main2Activity extends AppCompatActivity {
     TextView countdownText;
     Button btnAbbrechen;
     Button btnPause;
-    CountDownTimer countDownTimer;
-    long timeLeftInMilliseconds; // 10 Minutes
+    String minute;
     boolean timerRunning;
-
+    CountDownTimer countDownTimer;
+    long timeLeftInMilliseconds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main2);
         countdownText=(TextView) findViewById(R.id.textView);
 
         Bundle bundle = getIntent().getExtras();
-        String minute = bundle.getString("minute");
+        minute = bundle.getString("minute");
 
         //countdownText.setText(minute);
         timeLeftInMilliseconds = Integer.parseInt(minute) * 60000;
@@ -65,7 +66,7 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                countdownText.setText("00:00");
             }
         }.start();
 
