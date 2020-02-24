@@ -34,6 +34,8 @@ public class Main2Activity extends AppCompatActivity {
         //countdownText.setText(minute);
         timeLeftInMilliseconds = Integer.parseInt(minute) * 60000;
 
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         btnAbbrechen=(Button)findViewById(R.id.btnAbbrechen);
         btnAbbrechen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,7 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startStop();
+                vibrator.vibrate(100);
             }
         });
         startStop();
@@ -91,13 +94,6 @@ public class Main2Activity extends AppCompatActivity {
         int seconds = (int) (timeLeftInMilliseconds / 1000) % 60;
 
         String timeLeftText =  String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-
-
-      //  timeLeftText = "" + minutes;
-      //  timeLeftText += ":";
-      //  if (seconds < 10) timeLeftText += "0";
-      //  timeLeftText += seconds;
-
         countdownText.setText(timeLeftText);
     }
 

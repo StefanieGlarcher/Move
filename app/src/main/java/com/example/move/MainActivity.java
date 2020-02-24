@@ -2,8 +2,10 @@ package com.example.move;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.widget.TextView;
 import android.os.Build;
 import android.view.View;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         picker=(TimePicker)findViewById(R.id.timePicker1);
         picker.setIs24HourView(true);
         picker.setHour(0);
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 Timer timer = new Timer();
                 minuteText = timer.setTimer(hour, minute);
 
+                vibrator.vibrate(100);
                 openActivity2();
             }
         });
