@@ -14,6 +14,7 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -22,8 +23,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     SensorManager sensorManager;
     boolean running = false;
 
-    final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-    final long[] pattern = {2000,1000};
+    //final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    final long[] pattern = {1000,1000};
 
     TextView countdownText;
     Button btnAbbrechen;
@@ -46,8 +47,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
         //countdownText.setText(minute);
         timeLeftInMilliseconds = Integer.parseInt(minute) * 60000;
-
-        //final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 
         btnAbbrechen=(Button)findViewById(R.id.btnAbbrechen);
@@ -55,6 +55,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             @Override
             public void onClick(View v) {
                 openMainActivity();
+                vibrator.cancel();
             }
         });
 
@@ -63,7 +64,6 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             @Override
             public void onClick(View v) {
                 startStop();
-                vibrator.vibrate(pattern,0);
             }
         });
         startStop();
@@ -121,15 +121,33 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         startActivity(intent);
     }
 
-    // https://www.youtube.com/watch?v=CNGMWnmldaU
+    @Override
+    protected void onResume(){
+       super.onResume();
+       running = true;
+       Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+       if(countSensor != null){
+           sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+       } else {
+           Toast.makeText(this, "Sensor not fount", Toast.LENGTH_SHORT).show();
+       }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        running = false;
+    }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (running = false){
             vibrator.vibrate(pattern,0);
+
         } else {
-            // Vibration stoppen (Methode welche vibration stoppt)
-            vibrator.cancel();
+           vibrator.cancel();
         }
     }
 
