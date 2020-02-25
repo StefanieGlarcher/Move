@@ -1,5 +1,6 @@
 package com.example.move;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -15,32 +17,49 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.util.Objects;
 import java.util.Locale;
 
-public class Main2Activity extends AppCompatActivity implements SensorEventListener {
+public class Main2Activity extends AppCompatActivity {
 
     SensorManager sensorManager;
+
+    private SensorManager mSensorManager;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+
     boolean running = false;
 
-    //final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     final long[] pattern = {1000,1000};
 
     TextView countdownText;
+    TextView testTextView;
     Button btnAbbrechen;
     Button btnPause;
     String minute;
     boolean timerRunning;
     CountDownTimer countDownTimer;
     long timeLeftInMilliseconds;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
+        mAccel = 10f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+
         setContentView(R.layout.activity_main2);
         countdownText=(TextView) findViewById(R.id.textView);
+
+        testTextView=(TextView) findViewById(R.id.textView5);
 
         Bundle bundle = getIntent().getExtras();
         minute = bundle.getString("minute");
@@ -48,6 +67,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         //countdownText.setText(minute);
         timeLeftInMilliseconds = Integer.parseInt(minute) * 60000;
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
 
 
         btnAbbrechen=(Button)findViewById(R.id.btnAbbrechen);
@@ -121,38 +141,43 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         startActivity(intent);
     }
 
-    @Override
-    protected void onResume(){
-       super.onResume();
-       running = true;
-       Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-       if(countSensor != null){
-           sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
-       } else {
-           Toast.makeText(this, "Sensor not fount", Toast.LENGTH_SHORT).show();
-       }
-    }
+    private final SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+           // final long[] pattern = {1000,1000};
 
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            mAccelLast = mAccelCurrent;
+            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+            float delta = mAccelCurrent - mAccelLast;
+            mAccel = mAccel * 0.9f + delta;
+            if (mAccel > 12) {
+                vibrator.cancel();
+
+                Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
+            } else {
+               // vibrator.vibrate(pattern, 0);
+                vibrator.vibrate(100);
+               // Toast.makeText(getApplicationContext(), "Vibrire", Toast.LENGTH_SHORT).show();
+            }
+        }
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    };
+    @Override
+    protected void onResume() {
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        super.onResume();
+    }
     @Override
     protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
-        running = false;
     }
 
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (running){
-            vibrator.cancel();
-
-        } else {
-            vibrator.vibrate(pattern,0);
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 }
