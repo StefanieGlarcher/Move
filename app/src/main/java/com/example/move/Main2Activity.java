@@ -85,8 +85,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 timeLeftInMilliseconds = millisUntilFinished;
                 updateTimer();
                 if (timerRunning = true) {
-
-
+                    // Sensor
                 }
             }
 
@@ -122,13 +121,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         startActivity(intent);
     }
 
-    public void onSensorChange(SensorEvent event){
-        // Check if sensor ist on
-
-        // https://www.youtube.com/watch?v=CNGMWnmldaU
-
-        // If sensor not on then vibrate
-    }
+    // https://www.youtube.com/watch?v=CNGMWnmldaU
 
     @Override
     public void onSensorChanged(SensorEvent event) {
