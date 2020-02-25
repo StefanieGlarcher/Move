@@ -143,11 +143,11 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent event) {
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (running = false){
-            vibrator.vibrate(pattern,0);
+        if (running){
+            vibrator.cancel();
 
         } else {
-           vibrator.cancel();
+            vibrator.vibrate(pattern,0);
         }
     }
 
