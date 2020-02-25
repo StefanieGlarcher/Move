@@ -164,11 +164,7 @@ public class Main2Activity extends AppCompatActivity {
                 if (mAccel > 12) {
                     vibrator.cancel();
                     testTimer();
-
-                    Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 } else {
-                  //  vibrator.vibrate(100);
-
                     long[] mVibratePattern = new long[]{0, 200, 200, 200};
                     vibrator.vibrate(mVibratePattern, -1);
                 }
