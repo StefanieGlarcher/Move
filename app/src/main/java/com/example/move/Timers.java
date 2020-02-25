@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class Timer {
+public class Timers {
     TimePicker picker;
     Button btnGet;
     TextView tvw;

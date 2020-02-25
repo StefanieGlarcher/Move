@@ -17,8 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 import java.util.Objects;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -30,8 +35,6 @@ public class Main2Activity extends AppCompatActivity {
     private float mAccelLast;
 
     boolean running = false;
-
-    final long[] pattern = {1000,1000};
 
     TextView countdownText;
     TextView testTextView;
@@ -160,10 +163,14 @@ public class Main2Activity extends AppCompatActivity {
                 mAccel = mAccel * 0.9f + delta;
                 if (mAccel > 12) {
                     vibrator.cancel();
+                    testTimer();
 
                     Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 } else {
-                    vibrator.vibrate(100);
+                  //  vibrator.vibrate(100);
+
+                    long[] mVibratePattern = new long[]{0, 200, 200, 200};
+                    vibrator.vibrate(mVibratePattern, -1);
                 }
             }
         }
@@ -181,6 +188,20 @@ public class Main2Activity extends AppCompatActivity {
     protected void onPause() {
         mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
+    }
+
+    public void testTimer() {
+        mSensorManager.unregisterListener(mSensorListener);
+        TimerTask task = new TimerTask() {
+            public void run() {
+                mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                        SensorManager.SENSOR_DELAY_NORMAL);
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 3000L;
+        timer.schedule(task, delay);
     }
 
 }

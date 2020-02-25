@@ -52,11 +52,13 @@ public class MainActivity extends AppCompatActivity {
                     am_pm="AM";
                 }
 
-                Timer timer = new Timer();
+                Timers timer = new Timers();
                 minuteText = timer.setTimer(hour, minute);
 
-                vibrator.vibrate(100);
-                openActivity2();
+                if (hour != 0 || minute != 0) {
+                    vibrator.vibrate(100);
+                    openActivity2();
+                }
             }
         });
 
