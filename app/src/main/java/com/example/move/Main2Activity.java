@@ -22,6 +22,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     SensorManager sensorManager;
     boolean running = false;
 
+    final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    final long[] pattern = {2000,1000};
 
     TextView countdownText;
     Button btnAbbrechen;
@@ -45,7 +47,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         //countdownText.setText(minute);
         timeLeftInMilliseconds = Integer.parseInt(minute) * 60000;
 
-        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        //final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
 
         btnAbbrechen=(Button)findViewById(R.id.btnAbbrechen);
         btnAbbrechen.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +63,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
             @Override
             public void onClick(View v) {
                 startStop();
-                vibrator.vibrate(100);
+                vibrator.vibrate(pattern,0);
             }
         });
         startStop();
@@ -102,6 +105,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         countDownTimer.cancel();
         btnPause.setText("Weiter");
         timerRunning = false;
+
     }
 
     public void updateTimer() {
@@ -129,9 +133,10 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (running = false){
-            // Vibrieren starten (Methode welche dauerhaft Vibriert)
+            vibrator.vibrate(pattern,0);
         } else {
             // Vibration stoppen (Methode welche vibration stoppt)
+            vibrator.cancel();
         }
     }
 
