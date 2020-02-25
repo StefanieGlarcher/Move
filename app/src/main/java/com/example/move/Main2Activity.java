@@ -121,10 +121,11 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public void stopTimer(){
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         countDownTimer.cancel();
         btnPause.setText("Weiter");
         timerRunning = false;
-
+        vibrator.cancel();
     }
 
     public void updateTimer() {
@@ -145,23 +146,25 @@ public class Main2Activity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-           // final long[] pattern = {1000,1000};
 
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 12) {
+            if(timerRunning == false){
                 vibrator.cancel();
-
-                Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
             } else {
-               // vibrator.vibrate(pattern, 0);
-                vibrator.vibrate(100);
-               // Toast.makeText(getApplicationContext(), "Vibrire", Toast.LENGTH_SHORT).show();
+
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                mAccelLast = mAccelCurrent;
+                mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+                float delta = mAccelCurrent - mAccelLast;
+                mAccel = mAccel * 0.9f + delta;
+                if (mAccel > 12) {
+                    vibrator.cancel();
+
+                    Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
+                } else {
+                    vibrator.vibrate(100);
+                }
             }
         }
         @Override
