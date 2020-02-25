@@ -17,6 +17,12 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="34dp" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stunden : Minuten" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -48,7 +54,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="15dp"
             android:layout_weight="1"
-            android:text="Start" />
+            android:text="Start"
+            android:onClick="goToActivity2"
+            />
 
     </LinearLayout>
 

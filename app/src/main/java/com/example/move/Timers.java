@@ -1,15 +1,18 @@
 package com.example.move;
 
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class Timer {
+public class Timers {
     TimePicker picker;
     Button btnGet;
     TextView tvw;
+    CountDownTimer countDownTimer;
+    long timeleft;
+    boolean timerRunning;
+    Button btnPause;
 
     public String setTimer(int h, int m){
 
@@ -19,19 +22,21 @@ public class Timer {
         String minute= Integer.toString(hourinM);
 
         return minute;
-
-
     }
 
     public void pauseTimer(){
-        countDown.cancel();
-        timerRunning = false;
-        startPauseButton.setText("Weiter");
+      //  countDownTimer.cancel();
+      //  timerRunning = false;
+      //  startPauseButton.setText("Weiter");
     }
 
     public void startTimer(){
-        countDown = new CountDownTimer(timeleft, 1000);
+      //  countDownTimer = new CountDownTimer(timeleft, 1000);
 
+
+    }
+
+    public void checkTimer(){
 
     }
 }

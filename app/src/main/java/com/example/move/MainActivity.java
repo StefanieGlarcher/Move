@@ -1,7 +1,12 @@
 package com.example.move;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.widget.TextView;
 import android.os.Build;
 import android.view.View;
@@ -13,12 +18,17 @@ public class MainActivity extends AppCompatActivity {
     Button btnStart;
     Button btnAbbrechen;
     int hour, minute;
+    String minuteText;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         picker=(TimePicker)findViewById(R.id.timePicker1);
         picker.setIs24HourView(true);
+        picker.setHour(0);
+        picker.setMinute(0);
         btnStart=(Button)findViewById(R.id.btnStart);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +51,14 @@ public class MainActivity extends AppCompatActivity {
                 {
                     am_pm="AM";
                 }
-                setContentView(R.layout.activity_second);
+
+                Timers timer = new Timers();
+                minuteText = timer.setTimer(hour, minute);
+
+                if (hour != 0 || minute != 0) {
+                    vibrator.vibrate(100);
+                    openActivity2();
+                }
             }
         });
 
@@ -56,5 +73,17 @@ public class MainActivity extends AppCompatActivity {
                 minute = 0;
             }
         });
+    }
+
+    public void openActivity2(){
+        Intent intent = new Intent(this, Main2Activity.class);
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString("minute", minuteText);
+
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 }
