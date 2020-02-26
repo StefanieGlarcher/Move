@@ -188,8 +188,10 @@ public class Main2Activity extends AppCompatActivity {
 
     public void testTimer() {
         mSensorManager.unregisterListener(mSensorListener);
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         TimerTask task = new TimerTask() {
             public void run() {
+                vibrator.cancel();
                 mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                         SensorManager.SENSOR_DELAY_NORMAL);
             }
