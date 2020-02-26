@@ -71,14 +71,14 @@ public class Main2Activity extends AppCompatActivity {
         timeLeftInMilliseconds = Integer.parseInt(minute) * 60000;
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-
-
         btnAbbrechen=(Button)findViewById(R.id.btnAbbrechen);
         btnAbbrechen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                //mSensorManager.unregisterListener(mSensorListener);
+                timerRunning = false;
                 vibrator.cancel();
+                openMainActivity();
             }
         });
 
@@ -140,6 +140,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public void openMainActivity(){
+        timerRunning = false;
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
@@ -188,16 +189,13 @@ public class Main2Activity extends AppCompatActivity {
 
     public void testTimer() {
         mSensorManager.unregisterListener(mSensorListener);
-        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         TimerTask task = new TimerTask() {
             public void run() {
-                vibrator.cancel();
                 mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                         SensorManager.SENSOR_DELAY_NORMAL);
             }
         };
         Timer timer = new Timer("Timer");
-
         long delay = 3000L;
         timer.schedule(task, delay);
     }

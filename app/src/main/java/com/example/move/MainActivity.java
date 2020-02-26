@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 String am_pm;
                 if (Build.VERSION.SDK_INT >= 23 ){
                     hour = picker.getHour();
-                    minute = picker.getMinute();
+                     minute = picker.getMinute();
                 }
                 else{
                     hour = picker.getCurrentHour();
