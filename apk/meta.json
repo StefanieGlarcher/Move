@@ -1,0 +1,7 @@
+{
+  "name": "Move",
+  "authors": ["@JoanneGautschi", "@StefanieGlarcher"],
+  "version": "0.0.1",
+  "summary": "Fitness Timer App",
+  "minSdk": "19"
+}
